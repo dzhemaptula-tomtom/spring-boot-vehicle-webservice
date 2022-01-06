@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Api("Vehicle rest controller")
@@ -21,15 +22,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/vehicles")
 public class VehicleController {
-    List<Vehicle> vehicles = new ArrayList<>();
-    {
-        vehicles.add(new Vehicle(1,"Vehicle1", "Volkswagen"));
-        vehicles.add(new Vehicle(2,"Vehicle2", "BMW"));
-        vehicles.add(new Vehicle(3,"Vehicle3", "Mercedes"));
-        vehicles.add(new Vehicle(4,"Vehicle4", "Opel"));
-    }
+    List<Vehicle> vehicles = Arrays.asList(
+            new Vehicle(1L, "Vehicle1", "Volkswagen"),
+            new Vehicle(2L, "Vehicle2", "BMW"),
+            new Vehicle(3L, "Vehicle3", "Mercedes"),
+            new Vehicle(4L, "Vehicle4", "Opel")
+    );
 
-    @ApiOperation(value = "Get Vehicles", response = Iterable.class, tags = "getAllVehicles")
+    @ApiOperation(value = "Get Vehicles", tags = "getAllVehicles")
     @GetMapping("/")
     public List<Vehicle> getAllVehicles() {
         return vehicles;
