@@ -1,4 +1,4 @@
-package com.vehicle.configuration;
+package com.tomtom.vehicle.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,6 @@
-package com.vehicle.controller;
+package com.tomtom.vehicle.controller;
 
-import com.vehicle.model.Vehicle;
+import com.tomtom.vehicle.model.Vehicle;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -31,7 +31,7 @@ public class VehicleController {
 
     @ApiOperation(value = "Get Vehicles", response = Iterable.class, tags = "getAllVehicles")
     @GetMapping("/")
-    public String getAllVehicles() {
-        return "Hello vehicle";
+    public List<Vehicle> getAllVehicles() {
+        return vehicles;
     }
 }

@@ -1,4 +1,4 @@
-package com.vehicle.model;
+package com.tomtom.vehicle.model;
 
 import io.swagger.annotations.ApiModelProperty;
 
