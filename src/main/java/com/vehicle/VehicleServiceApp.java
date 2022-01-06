@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan
-public class VehicleServiceApp {
+public class 	VehicleServiceApp {
 
 	public static void main(String[] args) {
 		SpringApplication.run(VehicleServiceApp.class, args);
