@@ -1,17 +1,31 @@
 package com.tomtom.vehicle.model;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Entity(name="vehicles")
-@Table
+@Entity
+@Table(name = "vehicles")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Vehicle {
+    @Getter
     @Id
-    @GeneratedValue
-    @ApiModelProperty(notes = "Vehicle Id", name = "id", required = true, value = "1")
-    private Long id;
+    @SequenceGenerator(
+            name = "vehicle_sequence",
+            sequenceName = "vehicle_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vehicle_sequence")
+    @Column(name = "vehicle_id", nullable = false, updatable = false)
+    @ApiModelProperty(notes = "Vehicle Id", name = "vehicleId", required = true, value = "1")
+    private Long vehicleId;
 
+    @Getter
+    @Setter
     @Column(
             name = "name",
             nullable = false
@@ -19,6 +33,8 @@ public class Vehicle {
     @ApiModelProperty(notes = "Vehicle Name", name = "name", required = true, value = "golf")
     private String name;
 
+    @Getter
+    @Setter
     @Column(
             name = "brand",
             nullable = false
@@ -26,45 +42,15 @@ public class Vehicle {
     @ApiModelProperty(notes = "Vehicle Brand", name = "brand", required = true, value = "volkswagen")
     private String brand;
 
-    public Vehicle() {
-    }
+    @Getter
+    @Setter
+    @ManyToOne(
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(
+            name = "owner_user_id",
+            referencedColumnName = "user_id"
+    )
+    private User owner;
 
-    public Vehicle(Long id, String name, String brand) {
-        this.id = id;
-        this.name = name;
-        this.brand = brand;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    @Override
-    public String toString() {
-        return "Vehicle{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", brand='" + brand + '\'' +
-                '}';
-    }
 }

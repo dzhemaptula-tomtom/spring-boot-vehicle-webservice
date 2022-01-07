@@ -23,10 +23,10 @@ import java.util.List;
 @RequestMapping("/api/vehicles")
 public class VehicleController {
     List<Vehicle> vehicles = Arrays.asList(
-            new Vehicle(1L, "Vehicle1", "Volkswagen"),
-            new Vehicle(2L, "Vehicle2", "BMW"),
-            new Vehicle(3L, "Vehicle3", "Mercedes"),
-            new Vehicle(4L, "Vehicle4", "Opel")
+            Vehicle.builder().name("Tourog").brand("Volkswagen").build(),
+            Vehicle.builder().name("M3").brand("BMW").build(),
+            Vehicle.builder().name("CLA 118").brand("Mercedes").build(),
+            Vehicle.builder().name("Corsa").brand("Opel").build()
     );
 
     @ApiOperation(value = "Get Vehicles", tags = "getAllVehicles")

@@ -1,123 +1,85 @@
 package com.tomtom.vehicle.model;
 
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity(name = "User")
+@Entity
 @Table(
         name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(name = "user_email_unique", columnNames = "email")
         }
 )
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class User {
 
+    @Getter
     @Id
     @SequenceGenerator(
             name = "user_sequence",
             sequenceName = "user_sequence",
             allocationSize = 1
     )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
-    )
-    @Column(
-            name = "id",
-            updatable = false
-    )
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+    @Column(name = "user_id", nullable = false, updatable = false)
+    @ApiModelProperty(notes = "User Id", name = "userId", required = true, value = "1")
+    private Long userId;
 
+    @Getter
+    @Setter
     @Column(
             name = "first_name",
             nullable = false,
             columnDefinition = "TEXT"
     )
+    @ApiModelProperty(notes = "User first name", name = "firstName", required = true, value = "John")
     private String firstName;
 
+    @Getter
+    @Setter
     @Column(
             name = "last_name",
             nullable = false,
             columnDefinition = "TEXT"
     )
+    @ApiModelProperty(notes = "User last name", name = "lastName", required = true, value = "Doe")
     private String lastName;
 
+    @Getter
+    @Setter
     @Column(
             name = "email",
             nullable = false,
             columnDefinition = "TEXT"
-            // unique = true
     )
+    @ApiModelProperty(notes = "User email address", name = "email", required = true, value = "john.doe@tomtom.com")
     private String email;
 
+    @Getter
+    @Setter
     @Column(
             name = "birth_date"
     )
+    @ApiModelProperty(notes = "User birth date", name = "birthDate", required = true)
     private LocalDate birthDate;
 
-    public User() {
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User(
-            String firstName,
-            String lastName,
-            String email,
-            LocalDate birthDate
-    ) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.birthDate = birthDate;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", birthDate=" + birthDate +
-                '}';
-    }
+    @Getter
+    @Setter
+    @ToString.Exclude
+    @OneToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(
+            name = "owner_user_id",
+            referencedColumnName = "user_id"
+    )
+    private List<Vehicle> ownedVehicles = new ArrayList<>();
 }
